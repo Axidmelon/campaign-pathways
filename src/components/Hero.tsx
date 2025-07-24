@@ -1,17 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, Globe, Heart } from "lucide-react";
 import heroImage from "@/assets/hero-campaign.jpg";
-
 const Hero = () => {
-  return (
-    <section className="relative min-h-screen bg-gradient-hero flex items-center justify-center overflow-hidden">
+  return <section className="relative min-h-screen bg-gradient-hero flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={heroImage}
-          alt="People participating in environmental campaign"
-          className="w-full h-full object-cover opacity-30"
-        />
+        <img src={heroImage} alt="People participating in environmental campaign" className="w-full h-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-br from-forest-dark/60 via-primary/40 to-nature-blue/60" />
       </div>
 
@@ -60,7 +54,7 @@ const Hero = () => {
               Explore Campaigns
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="outline" size="lg" className="border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10">
+            <Button variant="outline" size="lg" className="border-primary-foreground/50 hover:bg-primary-foreground/10 text-slate-950">
               How it Works
             </Button>
           </div>
@@ -80,10 +74,12 @@ const Hero = () => {
 
       {/* Floating Animation Elements */}
       <div className="absolute bottom-10 left-10 w-20 h-20 bg-energy-orange/20 rounded-full animate-float" />
-      <div className="absolute top-20 right-20 w-16 h-16 bg-nature-blue/20 rounded-full animate-float" style={{ animationDelay: '1s' }} />
-      <div className="absolute bottom-20 right-32 w-12 h-12 bg-secondary/20 rounded-full animate-float" style={{ animationDelay: '2s' }} />
-    </section>
-  );
+      <div className="absolute top-20 right-20 w-16 h-16 bg-nature-blue/20 rounded-full animate-float" style={{
+      animationDelay: '1s'
+    }} />
+      <div className="absolute bottom-20 right-32 w-12 h-12 bg-secondary/20 rounded-full animate-float" style={{
+      animationDelay: '2s'
+    }} />
+    </section>;
 };
-
 export default Hero;
