@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, Calendar, Clock, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface CampaignCardProps {
   id: string;
@@ -20,6 +21,7 @@ interface CampaignCardProps {
 }
 
 const CampaignCard = ({
+  id,
   title,
   description,
   image,
@@ -34,6 +36,7 @@ const CampaignCard = ({
   difficulty,
   type
 }: CampaignCardProps) => {
+  const navigate = useNavigate();
   const spotsLeft = capacity - enrolled;
   const isAlmostFull = spotsLeft <= 5;
 
@@ -56,7 +59,10 @@ const CampaignCard = ({
   };
 
   return (
-    <div className="bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-campaign transition-smooth hover:scale-105 group">
+    <div 
+      className="bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-campaign transition-smooth hover:scale-105 group cursor-pointer"
+      onClick={() => navigate(`/campaign/${id}`)}
+    >
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -130,7 +136,14 @@ const CampaignCard = ({
             <div className="text-2xl font-bold text-foreground">₹{price.toLocaleString()}</div>
             <div className="text-sm text-muted-foreground">per person</div>
           </div>
-          <Button variant="campaign" className="group">
+          <Button 
+            variant="campaign" 
+            className="group"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/campaign/${id}`);
+            }}
+          >
             Book Now
             <Calendar className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
           </Button>
