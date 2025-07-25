@@ -221,12 +221,12 @@ interface FilterState {
 const CampaignsListing = () => {
   const [filters, setFilters] = useState<FilterState>({
     search: "",
-    category: "",
+    category: "all",
     location: "",
-    duration: "",
-    difficulty: "",
-    type: "",
-    priceRange: [10000],
+    duration: "all",
+    difficulty: "all",
+    type: "all",
+    priceRange: [10000] as [number],
     sortBy: "date"
   });
 
@@ -238,11 +238,11 @@ const CampaignsListing = () => {
                           campaign.description.toLowerCase().includes(filters.search.toLowerCase()) ||
                           campaign.location.toLowerCase().includes(filters.search.toLowerCase());
       
-      const matchesCategory = !filters.category || campaign.category === filters.category;
+      const matchesCategory = filters.category === "all" || campaign.category === filters.category;
       const matchesLocation = !filters.location || campaign.location.toLowerCase().includes(filters.location.toLowerCase());
-      const matchesDuration = !filters.duration || campaign.duration.includes(filters.duration);
-      const matchesDifficulty = !filters.difficulty || campaign.difficulty === filters.difficulty;
-      const matchesType = !filters.type || campaign.type === filters.type || campaign.type === "Both";
+      const matchesDuration = filters.duration === "all" || campaign.duration.includes(filters.duration);
+      const matchesDifficulty = filters.difficulty === "all" || campaign.difficulty === filters.difficulty;
+      const matchesType = filters.type === "all" || campaign.type === filters.type || campaign.type === "Both";
       const matchesPrice = campaign.price <= filters.priceRange[0];
 
       return matchesSearch && matchesCategory && matchesLocation && matchesDuration && 
@@ -266,17 +266,17 @@ const CampaignsListing = () => {
   const clearFilter = (filterKey: keyof FilterState) => {
     setFilters(prev => ({
       ...prev,
-      [filterKey]: filterKey === 'priceRange' ? [10000] as [number] : ""
+      [filterKey]: filterKey === 'priceRange' ? [10000] as [number] : filterKey === 'search' || filterKey === 'location' ? "" : "all"
     }));
   };
 
   const getActiveFilters = () => {
     const active = [];
-    if (filters.category) active.push({ key: 'category', value: filters.category });
+    if (filters.category && filters.category !== "all") active.push({ key: 'category', value: filters.category });
     if (filters.location) active.push({ key: 'location', value: filters.location });
-    if (filters.duration) active.push({ key: 'duration', value: filters.duration });
-    if (filters.difficulty) active.push({ key: 'difficulty', value: filters.difficulty });
-    if (filters.type) active.push({ key: 'type', value: filters.type });
+    if (filters.duration && filters.duration !== "all") active.push({ key: 'duration', value: filters.duration });
+    if (filters.difficulty && filters.difficulty !== "all") active.push({ key: 'difficulty', value: filters.difficulty });
+    if (filters.type && filters.type !== "all") active.push({ key: 'type', value: filters.type });
     if (filters.priceRange[0] < 10000) active.push({ key: 'priceRange', value: `Under ₹${filters.priceRange[0]}` });
     return active;
   };
@@ -290,7 +290,7 @@ const CampaignsListing = () => {
             <SelectValue placeholder="All Categories" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Categories</SelectItem>
+            <SelectItem value="all">All Categories</SelectItem>
             <SelectItem value="Environmental">Environmental</SelectItem>
             <SelectItem value="Social">Social Impact</SelectItem>
             <SelectItem value="Political">Political Action</SelectItem>
@@ -306,7 +306,7 @@ const CampaignsListing = () => {
             <SelectValue placeholder="Any Duration" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Any Duration</SelectItem>
+            <SelectItem value="all">Any Duration</SelectItem>
             <SelectItem value="1 day">1 Day</SelectItem>
             <SelectItem value="2">2-3 Days</SelectItem>
             <SelectItem value="3">3+ Days</SelectItem>
@@ -321,7 +321,7 @@ const CampaignsListing = () => {
             <SelectValue placeholder="Any Difficulty" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Any Difficulty</SelectItem>
+            <SelectItem value="all">Any Difficulty</SelectItem>
             <SelectItem value="Easy">Easy</SelectItem>
             <SelectItem value="Medium">Medium</SelectItem>
             <SelectItem value="Hard">Hard</SelectItem>
@@ -336,7 +336,7 @@ const CampaignsListing = () => {
             <SelectValue placeholder="Any Type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Any Type</SelectItem>
+            <SelectItem value="all">Any Type</SelectItem>
             <SelectItem value="Individual">Individual</SelectItem>
             <SelectItem value="Corporate">Corporate</SelectItem>
           </SelectContent>
@@ -474,11 +474,11 @@ const CampaignsListing = () => {
                     variant="outline" 
                     onClick={() => setFilters({
                       search: "",
-                      category: "",
+                      category: "all",
                       location: "",
-                      duration: "",
-                      difficulty: "",
-                      type: "",
+                      duration: "all",
+                      difficulty: "all",
+                      type: "all",
                       priceRange: [10000] as [number],
                       sortBy: "date"
                     })}
