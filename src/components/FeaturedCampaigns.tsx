@@ -95,7 +95,7 @@ const FeaturedCampaigns = () => {
 
         {/* View All CTA */}
         <div className="text-center">
-          <Button variant="hero" size="lg" className="group">
+          <Button variant="hero" size="lg" className="group" onClick={() => window.location.href = '/campaigns'}>
             View All Campaigns
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>

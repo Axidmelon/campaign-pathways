@@ -50,7 +50,7 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <Button variant="hero" size="lg" className="group">
+            <Button variant="hero" size="lg" className="group" onClick={() => window.location.href = '/campaigns'}>
               Explore Campaigns
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
